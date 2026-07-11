@@ -36,7 +36,7 @@ export function Hero() {
       {/* Content */}
       <div className="relative z-10 text-center px-6 py-20">
         <motion.img
-          src="/assets/logo.png"
+          src={`${import.meta.env.BASE_URL}assets/logo.png`}
           alt="Malika & Dario"
           className="mx-auto mb-6 max-w-[200px]"
           initial={{ opacity: 0, y: 20 }}

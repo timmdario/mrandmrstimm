@@ -46,7 +46,7 @@ export function Navigation() {
           onClick={(e) => handleClick(e, '#willkommen')}
           className="flex items-center gap-3 no-underline"
         >
-          <img src="/assets/logo.png" alt="Malika & Dario" className="h-12 w-auto" />
+          <img src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="Malika & Dario" className="h-12 w-auto" />
         </a>
 
         {/* Desktop */}

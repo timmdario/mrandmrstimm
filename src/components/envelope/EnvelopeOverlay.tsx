@@ -28,7 +28,7 @@ export function EnvelopeOverlay({ onComplete }: EnvelopeOverlayProps) {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'url(/assets/botanical-bg.svg)',
+          backgroundImage: `url(${import.meta.env.BASE_URL}assets/botanical-bg.svg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -53,7 +53,7 @@ export function EnvelopeOverlay({ onComplete }: EnvelopeOverlayProps) {
 
         {/* Logo */}
         <img
-          src="/assets/logo.png"
+          src={`${import.meta.env.BASE_URL}assets/logo.png`}
           alt="Malika & Dario"
           className="env-logo relative z-[5] mb-6"
           style={{ width: 180, filter: 'drop-shadow(0 2px 8px rgba(107,87,64,0.15))' }}
