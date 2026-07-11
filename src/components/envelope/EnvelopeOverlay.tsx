@@ -7,12 +7,13 @@ interface EnvelopeOverlayProps {
 
 export function EnvelopeOverlay({ onComplete }: EnvelopeOverlayProps) {
   const { openEnvelope } = useEnvelopeAnimation(onComplete)
+  const base = import.meta.env.BASE_URL
 
   return (
     <div
       id="envelope-overlay"
       className="fixed inset-0 w-screen h-screen flex items-center justify-center z-[1000] cursor-pointer overflow-hidden"
-      style={{ background: '#F8F4EE' }}
+      style={{ background: '#F5F0EA' }}
       onClick={openEnvelope}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -28,50 +29,31 @@ export function EnvelopeOverlay({ onComplete }: EnvelopeOverlayProps) {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `url(${import.meta.env.BASE_URL}assets/botanical-bg.svg)`,
+          backgroundImage: `url(${base}assets/botanical-bg.svg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          opacity: 0.6,
         }}
       />
 
-      {/* Soft radial overlay */}
+      {/* Soft vignette */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(255,253,249,0.2) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(245,240,234,0.6) 100%)',
         }}
       />
 
-      <div className="relative flex flex-col items-center">
-        {/* Petals container */}
-        <div
-          id="petals-container"
-          className="absolute pointer-events-none z-10"
-          style={{ top: '50%', left: '50%', width: 0, height: 0 }}
-        />
+      <Envelope3D />
 
-        {/* Logo */}
-        <img
-          src={`${import.meta.env.BASE_URL}assets/logo.png`}
-          alt="Malika & Dario"
-          className="env-logo relative z-[5] mb-6"
-          style={{ width: 180, filter: 'drop-shadow(0 2px 8px rgba(107,87,64,0.15))' }}
-        />
-
-        {/* 3D Envelope */}
-        <div className="envelope-scene" style={{ perspective: 1200 }}>
-          <Envelope3D />
-        </div>
-
-        {/* Hint */}
-        <p
-          className="env-hint mt-10 font-body text-base text-warm-gray tracking-wide"
-          style={{ animation: 'hintPulse 2.5s ease-in-out infinite' }}
-        >
-          Klick zum Öffnen
-        </p>
-      </div>
+      {/* Hint */}
+      <p
+        className="env-hint absolute bottom-16 font-body text-base text-warm-gray tracking-wide"
+        style={{ animation: 'hintPulse 2.5s ease-in-out infinite' }}
+      >
+        Klick zum Öffnen
+      </p>
     </div>
   )
 }
