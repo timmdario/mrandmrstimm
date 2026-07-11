@@ -16,18 +16,18 @@ export function useEnvelopeAnimation(onComplete: () => void) {
       ease: 'power2.in',
     })
 
-    // Seal: pulse, then shatter
-    tl.to('.envelope-seal', {
-      scale: 1.15,
+    // Seal breaks
+    tl.to('.env-seal', {
+      scale: 1.2,
       duration: 0.2,
       ease: 'power2.in',
     })
 
-    tl.to('.envelope-seal', {
+    tl.to('.env-seal', {
       scale: 0,
       rotation: 30,
       opacity: 0,
-      duration: 0.35,
+      duration: 0.3,
       ease: 'power3.in',
     })
 
@@ -38,50 +38,51 @@ export function useEnvelopeAnimation(onComplete: () => void) {
       x: (i: number) => [80, -70, 90, -85, 60][i] || 50,
       y: (i: number) => [-40, -55, -25, -50, -35][i] || -30,
       rotation: (i: number) => (i % 2 === 0 ? 200 : -200),
-      duration: 0.6,
+      duration: 0.5,
       ease: 'power2.out',
       stagger: 0.04,
-    }, '-=0.25')
+    }, '-=0.2')
 
-    // Cross-fade: closed → open envelope
-    tl.to('.envelope-closed', {
+    // Cross-fade: closed → open
+    tl.to('.env-closed', {
       opacity: 0,
       duration: 0.4,
       ease: 'power2.inOut',
     }, '-=0.1')
 
-    tl.to('.envelope-open', {
+    tl.to('.env-open', {
       opacity: 1,
       duration: 0.4,
       ease: 'power2.inOut',
     }, '-=0.4')
 
-    // Letter rises from inside
-    tl.to('.envelope-letter-img', {
+    // Letter rises and comes to front
+    tl.set('.env-letter', { zIndex: 35 })
+
+    tl.to('.env-letter', {
       opacity: 1,
-      y: -160,
-      duration: 1.0,
+      y: -140,
+      duration: 0.9,
       ease: 'power2.out',
     }, '-=0.1')
 
-    // Slight scale-up of letter
-    tl.to('.envelope-letter-img', {
-      scale: 1.08,
-      duration: 0.5,
+    tl.to('.env-letter', {
+      scale: 1.06,
+      duration: 0.4,
       ease: 'power2.out',
-    }, '-=0.6')
+    }, '-=0.5')
 
-    // Pause for reading
-    tl.to({}, { duration: 1.0 })
+    // Pause
+    tl.to({}, { duration: 0.8 })
 
-    // Petal explosion
-    tl.call(() => { spawnPetals() }, undefined, '-=0.8')
+    // Petals
+    tl.call(() => { spawnPetals() }, undefined, '-=0.6')
 
-    // Everything fades out
-    tl.to('.envelope-scene', {
+    // Fade out
+    tl.to('.envelope-scene-wrap', {
       opacity: 0,
-      scale: 0.92,
-      duration: 0.7,
+      scale: 0.94,
+      duration: 0.6,
       ease: 'power2.in',
     })
 
@@ -107,15 +108,11 @@ function spawnPetals() {
     const el = document.createElement('div')
     const size = 8 + Math.random() * 16
     const color = colors[Math.floor(Math.random() * colors.length)]
-    const shape = Math.random() > 0.4
-      ? `border-radius: ${40 + Math.random() * 20}% ${60 - Math.random() * 20}% ${40 + Math.random() * 20}% ${60 - Math.random() * 20}%;`
-      : `border-radius: 50% 0 50% 0;`
+    const br = Math.random() > 0.4
+      ? `${40 + Math.random() * 20}% ${60 - Math.random() * 20}% ${40 + Math.random() * 20}% ${60 - Math.random() * 20}%`
+      : '50% 0 50% 0'
 
-    el.style.cssText = `
-      position: absolute; width: ${size}px; height: ${size * 0.7}px;
-      background: ${color}; ${shape}
-      opacity: 0; pointer-events: none;
-    `
+    el.style.cssText = `position:absolute;width:${size}px;height:${size * 0.7}px;background:${color};border-radius:${br};opacity:0;pointer-events:none;`
     container.appendChild(el)
 
     const angle = (Math.random() - 0.5) * 240
@@ -140,21 +137,16 @@ function spawnPetals() {
       y: `+=${200 + Math.random() * 300}`,
       opacity: 0,
       rotation: `+=${Math.random() * 180}`,
-      duration: 1.2 + Math.random() * 1,
+      duration: 1.2 + Math.random(),
       delay: delay + 0.5,
       ease: 'power1.in',
     })
   }
 
-  // Golden sparkles
   for (let i = 0; i < 25; i++) {
     const spark = document.createElement('div')
-    const size = 2 + Math.random() * 4
-    spark.style.cssText = `
-      position: absolute; width: ${size}px; height: ${size}px;
-      background: #C9A96E; border-radius: 50%; opacity: 0; pointer-events: none;
-      box-shadow: 0 0 ${size * 3}px ${size}px rgba(201,169,110,0.4);
-    `
+    const s = 2 + Math.random() * 4
+    spark.style.cssText = `position:absolute;width:${s}px;height:${s}px;background:#C9A96E;border-radius:50%;opacity:0;pointer-events:none;box-shadow:0 0 ${s * 3}px ${s}px rgba(201,169,110,0.4);`
     container.appendChild(spark)
 
     const angle = Math.random() * 360
@@ -165,16 +157,14 @@ function spawnPetals() {
     gsap.to(spark, {
       x: Math.cos(angle * Math.PI / 180) * dist,
       y: Math.sin(angle * Math.PI / 180) * dist,
-      opacity: 1,
-      scale: 1,
+      opacity: 1, scale: 1,
       duration: 0.3 + Math.random() * 0.3,
       delay: Math.random() * 0.4,
       ease: 'power2.out',
     })
 
     gsap.to(spark, {
-      opacity: 0,
-      scale: 0,
+      opacity: 0, scale: 0,
       duration: 0.5,
       delay: 0.25 + Math.random() * 0.4,
       ease: 'power2.in',

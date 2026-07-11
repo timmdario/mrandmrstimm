@@ -45,7 +45,9 @@ export function EnvelopeOverlay({ onComplete }: EnvelopeOverlayProps) {
         }}
       />
 
-      <Envelope3D />
+      <div className="envelope-scene-wrap relative z-10">
+        <Envelope3D />
+      </div>
 
       {/* Hint */}
       <p
