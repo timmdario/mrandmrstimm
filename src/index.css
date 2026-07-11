@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FDFCFA;
+  --color-cream-warm: #F8F5F0;
+  --color-ivory: #E8E2DA;
+  --color-gold: #C9A96E;
+  --color-gold-light: #E0C99A;
+  --color-gold-dark: #A88A4E;
+  --color-amber: #B8956A;
+  --color-mauve: #C4A5A5;
+  --color-mauve-light: #D4B8B8;
+  --color-charcoal: #2C2C2C;
+  --color-warm-gray: #6B6560;
+  --color-warm-gray-light: #9A9490;
+  --color-seal-red: #A04030;
+  --color-seal-dark: #5A1E10;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-script: 'Great Vibes', cursive;
+}
+
+/* ===== BASE ===== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-warm-gray);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== SCROLLBAR ===== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream-warm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ivory);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* ===== SELECTION ===== */
+
+::selection {
+  background: var(--color-gold-light);
+  color: var(--color-charcoal);
+}
+
+/* ===== ENVELOPE 3D SCENE ===== */
+
+.envelope-scene {
+  perspective: 1200px;
+}
+
+.envelope-3d {
+  transform-style: preserve-3d;
+}
+
+.flap-top {
+  transform-origin: top center;
+  transform-style: preserve-3d;
+}
+
+.flap-top-inner {
+  backface-visibility: visible;
+}
+
+/* ===== PETAL ANIMATIONS ===== */
+
+@keyframes petalFloat {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-30px) rotate(45deg) scale(1);
+  }
+  100% {
+    transform: translateY(300px) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% { opacity: 0; transform: translateX(-100%); }
+  50% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.85; transform: translateY(-4px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+/* ===== ORGANIC DIVIDER ===== */
+
+.organic-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ===== FADE CLASSES (Framer Motion) ===== */
+
+.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
