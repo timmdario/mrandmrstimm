@@ -63,25 +63,6 @@ body {
   color: var(--color-charcoal);
 }
 
-/* ===== ENVELOPE 3D SCENE ===== */
-
-.envelope-scene {
-  perspective: 1200px;
-}
-
-.envelope-3d {
-  transform-style: preserve-3d;
-}
-
-.flap-top {
-  transform-origin: top center;
-  transform-style: preserve-3d;
-}
-
-.flap-top-inner {
-  backface-visibility: visible;
-}
-
 /* ===== PETAL ANIMATIONS ===== */
 
 @keyframes petalFloat {

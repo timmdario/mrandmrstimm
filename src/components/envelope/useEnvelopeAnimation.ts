@@ -16,79 +16,52 @@ export function useEnvelopeAnimation(onComplete: () => void) {
       ease: 'power2.in',
     })
 
-    // Seal breaks
-    tl.to('.env-seal', {
-      scale: 1.2,
-      duration: 0.2,
+    // Seal "breaks" — quick scale up then shrink
+    tl.to('.env-seal-overlay', {
+      scale: 1.3,
+      duration: 0.15,
       ease: 'power2.in',
     })
 
-    tl.to('.env-seal', {
+    tl.to('.env-seal-overlay', {
       scale: 0,
-      rotation: 30,
+      rotation: 25,
       opacity: 0,
-      duration: 0.3,
+      duration: 0.25,
       ease: 'power3.in',
     })
 
-    // Seal fragments scatter
-    tl.to('.seal-frag', {
+    // Cross-fade: closed PNG → open PNG
+    tl.to('.env-closed-img', {
       opacity: 0,
-      scale: 0.3,
-      x: (i: number) => [80, -70, 90, -85, 60][i] || 50,
-      y: (i: number) => [-40, -55, -25, -50, -35][i] || -30,
-      rotation: (i: number) => (i % 2 === 0 ? 200 : -200),
       duration: 0.5,
-      ease: 'power2.out',
-      stagger: 0.04,
-    }, '-=0.2')
-
-    // Cross-fade: closed → open
-    tl.to('.env-closed', {
-      opacity: 0,
-      duration: 0.4,
       ease: 'power2.inOut',
-    }, '-=0.1')
+    }, '-=0.05')
 
-    tl.to('.env-open', {
+    tl.to('.env-open-img', {
       opacity: 1,
-      duration: 0.4,
+      scale: 1,
+      duration: 0.5,
       ease: 'power2.inOut',
-    }, '-=0.4')
-
-    // Letter rises and comes to front
-    tl.set('.env-letter', { zIndex: 35 })
-
-    tl.to('.env-letter', {
-      opacity: 1,
-      y: -140,
-      duration: 0.9,
-      ease: 'power2.out',
-    }, '-=0.1')
-
-    tl.to('.env-letter', {
-      scale: 1.06,
-      duration: 0.4,
-      ease: 'power2.out',
     }, '-=0.5')
 
-    // Pause
-    tl.to({}, { duration: 0.8 })
+    // Brief pause to admire the open letter
+    tl.to({}, { duration: 0.9 })
 
-    // Petals
-    tl.call(() => { spawnPetals() }, undefined, '-=0.6')
+    // Petals burst
+    tl.call(() => { spawnPetals() }, undefined, '-=0.5')
 
-    // Fade out
+    // Fade the whole scene out
     tl.to('.envelope-scene-wrap', {
       opacity: 0,
-      scale: 0.94,
+      scale: 0.95,
       duration: 0.6,
       ease: 'power2.in',
     })
 
     tl.to('#envelope-overlay', {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.4,
       ease: 'power2.inOut',
     }, '-=0.3')
   }
@@ -157,14 +130,16 @@ function spawnPetals() {
     gsap.to(spark, {
       x: Math.cos(angle * Math.PI / 180) * dist,
       y: Math.sin(angle * Math.PI / 180) * dist,
-      opacity: 1, scale: 1,
+      opacity: 1,
+      scale: 1,
       duration: 0.3 + Math.random() * 0.3,
       delay: Math.random() * 0.4,
       ease: 'power2.out',
     })
 
     gsap.to(spark, {
-      opacity: 0, scale: 0,
+      opacity: 0,
+      scale: 0,
       duration: 0.5,
       delay: 0.25 + Math.random() * 0.4,
       ease: 'power2.in',
